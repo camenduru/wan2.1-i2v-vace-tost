@@ -315,10 +315,10 @@ def generate(input):
         values = input["input"]
 
         input_image = values['input_image']
-        input_image = download_file(url=input_image, save_dir='/content/dev/ComfyUI/input', file_name='input_image')
+        input_image = download_file(url=input_image, save_dir='/content/ComfyUI/input', file_name='input_image')
 
         input_video = values['input_video']
-        input_video = download_file(url=input_video, save_dir='/content/dev/ComfyUI/input', file_name='input_video')
+        input_video = download_file(url=input_video, save_dir='/content/ComfyUI/input', file_name='input_video')
 
         positive_prompt = values['positive_prompt'] # A mid-shot of a asian woman in a sparkly pink crop top and low-rise cargo pants, dancing sharply in sync with the beat while singing straight into the camera. Her hair is styled in voluminous waves with front strands pulled into mini pigtails. Behind her, colored spotlights flash across a silver sequin curtain backdrop. Pure early-2000s pop performance.
         negative_prompt = values['negative_prompt'] # 色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿
