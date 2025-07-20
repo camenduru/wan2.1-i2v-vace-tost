@@ -7,6 +7,7 @@ https://tost.ai
 
 ### 🧬 Code
 https://github.com/ali-vilab/VACE <br />
+https://github.com/tianweiy/CausVid <br />
 https://github.com/Wan-Video/Wan2.1
 
 ### 📄 Paper
