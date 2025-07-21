@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-04/hyper-schema#",
+  "type": "object",
+  "properties": {
+    "readme": {
+      "type": "string",
+      "title": "Wan 2.1 VACE I2V: All-in-One Video Creation and Editing",
+      "author": "Zeyinzi Jiang, Zhen Han, Chaojie Mao, Jingfeng Zhang, Yulin Pan, Yu Liu",
+      "code": "https://github.com/ali-vilab/VACE",
+      "paper": "https://arxiv.org/abs/2503.07598",
+      "page": "https://ali-vilab.github.io/VACE-Page/",
+      "tags": [
+        "Image to Video"
+      ],
+      "widget": "readme"
+    },
+    "upload1": {
+      "type": "string",
+      "widget": "upload",
+      "upload_url": "https://tost.ai/api/jobs/upload",
+      "property": "input_image"
+    },
+    "input_image": {
+      "type": "string",
+      "description": "Input Image URL",
+      "widget": "textarea"
+    },
+    "upload2": {
+      "type": "string",
+      "widget": "upload",
+      "upload_url": "https://tost.ai/api/jobs/upload",
+      "property": "input_video"
+    },
+    "input_video": {
+      "type": "string",
+      "description": "Input Video URL",
+      "widget": "textarea"
+    },
+    "positive_prompt": {
+      "type": "string",
+      "description": "Positive Prompt",
+      "widget": "textarea"
+    },
+    "negative_prompt": {
+      "type": "string",
+      "description": "Negative Prompt",
+      "widget": "hidden"
+    },
+    "width": {
+      "type": "integer",
+      "widget": "select",
+      "description": "Width",
+      "oneOf": [
+        {
+          "description": "576",
+          "enum": [
+            576
+          ]
+        },
+        {
+          "description": "720",
+          "enum": [
+            720
+          ]
+        },
+        {
+          "description": "1024",
+          "enum": [
+            1024
+          ]
+        },
+        {
+          "description": "1280",
+          "enum": [
+            1280
+          ]
+        }
+      ],
+      "default": 1024
+    },
+    "height": {
+      "type": "integer",
+      "widget": "select",
+      "description": "Height",
+      "oneOf": [
+        {
+          "description": "576",
+          "enum": [
+            576
+          ]
+        },
+        {
+          "description": "720",
+          "enum": [
+            720
+          ]
+        },
+        {
+          "description": "1024",
+          "enum": [
+            1024
+          ]
+        },
+        {
+          "description": "1280",
+          "enum": [
+            1280
+          ]
+        }
+      ],
+      "default": 576
+    },
+    "length": {
+      "type": "integer",
+      "description": "Length",
+      "widget": "hidden"
+    },
+    "batch_size": {
+      "type": "integer",
+      "description": "Batch Size",
+      "widget": "hidden"
+    },
+    "strength": {
+      "type": "integer",
+      "description": "Strength"
+    },
+    "shift": {
+      "type": "integer",
+      "description": "Shift"
+    },
+    "cfg": {
+      "type": "number",
+      "description": "CFG"
+    },
+    "sampler_name": {
+      "type": "string",
+      "description": "Sampler Name"
+    },
+    "scheduler": {
+      "type": "string",
+      "description": "Scheduler"
+    },
+    "steps": {
+      "type": "integer",
+      "description": "Steps",
+      "widget": "hidden"
+    },
+    "seed": {
+      "type": "integer",
+      "description": "Seed (if 0 random)"
+    },
+    "fps": {
+      "type": "integer",
+      "description": "FPS"
+    },
+    "filename_prefix": {
+      "type": "string",
+      "description": "Filename Prefix",
+      "widget": "hidden"
+    },
+    "example": {
+      "type": "string",
+      "image1": "https://files.catbox.moe/sd01ul.jpg",
+      "image2": "https://files.catbox.moe/1vu57m.mp4",
+      "image3": "https://holder.tost.ai/1347x836/282828/eae0d0/?text=<in out>#.png",
+      "image4": "https://holder.tost.ai/1347x836/282828/eae0d0/?text=output#.png",
+      "video_aspect_ratio": "60%",
+      "line1": "Video: 1280x720 pixels, 5 seconds | Gen Time: ~6 minutes",
+      "line2": "Video: 1024x576 pixels, 5 seconds | Gen Time: ~3 minutes",
+      "widget": "example"
+    }
+  },
+  "buttons": [
+    {
+      "id": "enter",
+      "label": "🥪 Enter"
+    }
+  ]
+}

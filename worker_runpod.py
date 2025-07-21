@@ -331,7 +331,7 @@ def generate(input):
         cfg = values['cfg'] # 1.0
         sampler_name = values['sampler_name'] # uni_pc
         scheduler = values['scheduler'] # simple
-        steps = values['steps'] # 8
+        steps = values['steps'] # 4
         seed = values['seed'] # 1.0
         if seed == 0:
             random.seed(int(time.time()))
