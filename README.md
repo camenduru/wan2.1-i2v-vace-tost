@@ -20,6 +20,8 @@ https://wan.video/
 
 ### 🖼 Output
 
+https://github.com/user-attachments/assets/6d9a5fd9-9bac-4def-8075-ff635e8735ea
+
 Input Video:
 
 https://github.com/user-attachments/assets/c05a95a9-befd-4660-a98e-fad29a17e3ed
