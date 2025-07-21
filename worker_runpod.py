@@ -354,7 +354,7 @@ def generate(input):
         negative = CLIPTextEncode.encode(clip, negative_prompt)[0]
         model = ModelSamplingSD3.patch(lora, shift)[0]
 
-        positive, negative, out_latent, trim_latent = WanVaceToVideo.encode(positive, negative, vae, width, height, length, batch_size, strength, control_video=pose_images, reference_image=resized_input_image)
+        positive, negative, out_latent, trim_latent = WanVaceToVideo.encode(positive, negative, vae, resized_images_new_w, resized_images_new_h, frame_count, batch_size, strength, control_video=pose_images, reference_image=resized_input_image)
         samples = KSampler.sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, out_latent)[0]
         out_samples = TrimVideoLatent.op(samples, trim_latent)[0]
 
