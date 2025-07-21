@@ -122,7 +122,8 @@
     },
     "strength": {
       "type": "integer",
-      "description": "Strength"
+      "description": "Strength",
+      "widget": "hidden"
     },
     "shift": {
       "type": "integer",
@@ -160,8 +161,8 @@
     },
     "example": {
       "type": "string",
-      "image1": "https://files.catbox.moe/sd01ul.jpg",
-      "image2": "https://files.catbox.moe/1vu57m.mp4",
+      "image1": "https://files.catbox.moe/whpkw0.png",
+      "image2": "https://files.catbox.moe/ehbjcd.mp4",
       "image3": "https://holder.tost.ai/1347x836/282828/eae0d0/?text=<in out>#.png",
       "image4": "https://holder.tost.ai/1347x836/282828/eae0d0/?text=output#.png",
       "video_aspect_ratio": "60%",
