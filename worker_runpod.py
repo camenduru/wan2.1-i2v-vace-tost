@@ -113,7 +113,7 @@ def resized_cv_frame_gen(video_path, target_size=(640, 360)):
 
     cap.release()
 
-def load_video(video_path):
+def load_video(video_path, max_loadable_frames=None):
     gen = resized_cv_frame_gen(video_path)
 
     width, height, fps, duration, total_frames, target_frame_time, _, new_width, new_height, alpha = next(gen)
@@ -125,19 +125,23 @@ def load_video(video_path):
         memory_limit = float("inf")
 
     frame_mem = width * height * 3 * 0.1  # rough estimate
-    max_frames = int(memory_limit // frame_mem)
+    max_memory_frames = int(memory_limit // frame_mem)
+
+    frame_limit = min(max_memory_frames, max_loadable_frames) if max_loadable_frames else max_memory_frames
 
     original_gen = gen
-    gen = itertools.islice(gen, max_frames)
+    gen = itertools.islice(gen, frame_limit)
     img_shape = (new_height, new_width, 4 if alpha else 3)
 
     images = torch.from_numpy(np.fromiter(gen, np.dtype((np.float32, img_shape))))
 
-    try:
-        next(original_gen)
-        raise RuntimeError(f"Memory limit hit after loading {len(images)} frames.")
-    except StopIteration:
-        pass
+    # Only raise if hitting memory limit, not user-specified frame limit
+    if max_loadable_frames is None:
+        try:
+            next(original_gen)
+            raise RuntimeError(f"Memory limit hit after loading {len(images)} frames.")
+        except StopIteration:
+            pass
 
     if len(images) == 0:
         raise RuntimeError("No frames generated.")
@@ -324,7 +328,7 @@ def generate(input):
         negative_prompt = values['negative_prompt'] # 色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿
         width = values['width'] # 1024
         height = values['height'] # 576
-        length = values['length'] # 121
+        length = values['length'] # 81
         batch_size = values['batch_size'] # 1
         strength = values['strength'] # 1
         shift = values['shift'] # 1.0
@@ -339,7 +343,7 @@ def generate(input):
         fps = values['fps'] # 24
         filename_prefix = values['filename_prefix'] # wan_i2v_vace_CausVid
 
-        images, frame_count, audio, video_info = load_video(input_video)
+        images, frame_count, audio, video_info = load_video(input_video, max_loadable_frames=length)
         resized_images, resized_images_new_w, resized_images_new_h, resized_images_mask = resize_and_pad_image(images, width=width, height=height, keep_proportion="crop", pad_mode="color", pad_color="0, 0, 0", extra_padding=0, upscale_method="bilinear", divisible_by=2, crop_position="center")
         pose_images = DWPreprocessor.estimate_pose(resized_images, detect_hand="enable", detect_body="enable", detect_face="enable", resolution=1024, bbox_detector="yolox_l.onnx", pose_estimator="dw-ll_ucoco_384_bs5.torchscript.pt", scale_stick_for_xinsr_cn="disable")["result"][0]
         input_image = LoadImage.load_image(input_image)[0]
@@ -350,7 +354,7 @@ def generate(input):
         negative = CLIPTextEncode.encode(clip, negative_prompt)[0]
         model = ModelSamplingSD3.patch(lora, shift)[0]
 
-        positive, negative, out_latent, trim_latent = WanVaceToVideo.encode(positive, negative, vae, resized_images_new_w, resized_images_new_h, frame_count, batch_size, strength, control_video=pose_images, reference_image=resized_input_image)
+        positive, negative, out_latent, trim_latent = WanVaceToVideo.encode(positive, negative, vae, width, height, length, batch_size, strength, control_video=pose_images, reference_image=resized_input_image)
         samples = KSampler.sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, out_latent)[0]
         out_samples = TrimVideoLatent.op(samples, trim_latent)[0]
 
